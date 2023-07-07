@@ -1,0 +1,81 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type StorySchema {
+  id: String!
+  title: String!
+  content: String!
+  created_at: DateTime!
+  user: User!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type User {
+  id: String
+  name: String!
+  userName: String!
+  bio: String
+  role: String!
+  profile_pic: String
+  stories: [StorySchema!]
+}
+
+type UserSignin {
+  user: User!
+  jwttoken: String!
+}
+
+type Meta {
+  totalItems: Float!
+  itemCount: Float!
+  itemsPerPage: Float!
+  totalPages: Float!
+  currentPage: Float!
+}
+
+type StoryPagination {
+  items: [StorySchema!]!
+  meta: Meta!
+}
+
+type UserPagination {
+  items: [User!]!
+  meta: Meta!
+}
+
+type Query {
+  getLoggedUser: User!
+  allStories(page: Float, limit: Float): StoryPagination!
+  getstory(id: String!): StorySchema!
+  allUsers(page: Float, limit: Float): UserPagination!
+  getUser(id: String!): User!
+}
+
+type Mutation {
+  signIn(data: SignInInput!): UserSignin!
+  register(data: RegisterInputs!): UserSignin!
+  adminRegister(data: RegisterInputs!): UserSignin!
+  addStory(data: AddStoryInput!): String!
+}
+
+input SignInInput {
+  userName: String!
+  password: String!
+}
+
+input RegisterInputs {
+  name: String!
+  userName: String!
+  profile_pic: String
+  password: String!
+}
+
+input AddStoryInput {
+  title: String!
+  content: String!
+}
